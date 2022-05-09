@@ -1,6 +1,5 @@
 import HttpStatusCodes from 'http-status-codes';
 
-
 export abstract class CustomError extends Error {
 
     public readonly HttpStatus = HttpStatusCodes.BAD_REQUEST;
@@ -10,7 +9,6 @@ export abstract class CustomError extends Error {
         this.HttpStatus = httpStatus;
     }
 }
-
 
 export class ParamMissingError extends CustomError {
 
