@@ -10,7 +10,6 @@ const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 require("express-async-errors");
 const routes_1 = __importDefault(require("./routes"));
-const jet_logger_1 = __importDefault(require("jet-logger"));
 const errors_1 = require("@shared/errors");
 // Constants
 const app = (0, express_1.default)();
@@ -36,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/', routes_1.default);
 // Error handling
 app.use((err, _, res, __) => {
-    jet_logger_1.default.err(err, true);
+    console.error(err, true);
     const status = (err instanceof errors_1.CustomError ? err.HttpStatus : http_status_codes_1.default.BAD_REQUEST);
     return res.status(status).json({
         error: err.message,

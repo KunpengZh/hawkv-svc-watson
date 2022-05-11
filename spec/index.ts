@@ -2,7 +2,7 @@ import './loadEnv';
 import find from 'find';
 import Jasmine from 'jasmine';
 import commandLineArgs from 'command-line-args';
-import logger from 'jet-logger';
+
 
 
 
@@ -39,7 +39,7 @@ if (options.testFile) {
             jasmine.specFiles = [files[0]];
             jasmine.execute();
         } else {
-            logger.err('Test file not found!');
+            console.error('Test file not found!');
         }
     });
 } else {
@@ -51,9 +51,9 @@ if (options.testFile) {
     if (!!execResp) {
         const info = await execResp;
         if (info.overallStatus === 'passed') {
-            logger.info('All tests have passed :)');
+            console.info('All tests have passed :)');
         } else {
-            logger.err('At least one test has failed :(');
+            console.error('At least one test has failed :(');
         }
     }
 })();

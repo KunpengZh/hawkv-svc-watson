@@ -7,7 +7,6 @@ import StatusCodes from 'http-status-codes';
 import 'express-async-errors';
 
 import BaseRouter from './routes';
-import logger from 'jet-logger';
 import { CustomError } from '@shared/errors';
 
 
@@ -44,7 +43,7 @@ app.use('/', BaseRouter);
 
 // Error handling
 app.use((err: Error | CustomError, _: Request, res: Response, __: NextFunction) => {
-    logger.err(err, true);
+    console.error(err, true);
     const status = (err instanceof CustomError ? err.HttpStatus : StatusCodes.BAD_REQUEST);
     return res.status(status).json({
         error: err.message,
