@@ -16,4 +16,12 @@ pttRouter.post('/submitPTTRequest', (req, res) => __awaiter(void 0, void 0, void
     const parms = req.body;
     res.json(yield (0, PTTSvc_1.submitPTTRequest)(parms));
 }));
+pttRouter.post('/returnPTTRequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const parms = req.body;
+    res.json(yield (0, PTTSvc_1.returnPTTRequest)(parms));
+}));
+pttRouter.post('/completedPTTRequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const parms = req.body;
+    res.json(yield (0, PTTSvc_1.completedPTTRequest)(parms));
+}));
 exports.default = pttRouter;

@@ -84,7 +84,7 @@ export async function searchDocByIndex(payload: {
         };
         const searchRes = await client.postSearch(params);
         if (searchRes.status === 200) {
-            return searchRes.result || {}
+            return searchRes.result
         }
         throw new Error(JSON.stringify(searchRes));
     } catch (error: any) {

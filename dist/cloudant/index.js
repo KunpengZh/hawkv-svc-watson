@@ -83,7 +83,7 @@ function searchDocByIndex(payload) {
             const params = Object.assign(Object.assign({}, payload), { db: hawkvDBName, includeFields: payload.includeFields || [], limit: payload.limit || 20 });
             const searchRes = yield client.postSearch(params);
             if (searchRes.status === 200) {
-                return searchRes.result || {};
+                return searchRes.result;
             }
             throw new Error(JSON.stringify(searchRes));
         }

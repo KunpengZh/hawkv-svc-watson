@@ -36,4 +36,68 @@ export const submitPTTRequest = async (params: SubmitParams) => {
         return ResponseWarp.err(100, error.reason || '', 'errorData', error);
     }
 };
+export const returnPTTRequest = async (params: SubmitParams) => {
+    const { doc } = params;
+    try {
+        let response: CloudantV1.DocumentResult;
+        if ((doc._id && !doc._rev) || (doc._rev && !doc._id)) {
+            return ResponseWarp.err(100, 'Document _id, _rev inclrrect');
+        }
+        if (doc._id && doc._rev) {
+            response = await updateDocument(doc);
+        } else {
+            response = await createNewDocument(doc);
+        }
+        const pttDoc: PTTDoc = {
+            ...doc,
+            _rev: response.rev,
+            _id: response.id
+        }
+        const emailRes = await sendPTTEmails({
+            ...params,
+            hostUrlLink:`${params.hostUrlLink}${pttDoc._id}`,
+            doc: pttDoc,
+            emailKey: 'onAskedMoreInfo'
+        });
+        if (emailRes.code !== 200) {
+            return ResponseWarp.err(202, "Document saved but send email failed", 'doc', pttDoc);
+        }
+        return ResponseWarp.success('doc', pttDoc);
+    } catch (error: any) {
+        console.log(error);
+        return ResponseWarp.err(100, error.reason || '', 'errorData', error);
+    }
+};
+export const completedPTTRequest = async (params: SubmitParams) => {
+    const { doc } = params;
+    try {
+        let response: CloudantV1.DocumentResult;
+        if ((doc._id && !doc._rev) || (doc._rev && !doc._id)) {
+            return ResponseWarp.err(100, 'Document _id, _rev inclrrect');
+        }
+        if (doc._id && doc._rev) {
+            response = await updateDocument(doc);
+        } else {
+            response = await createNewDocument(doc);
+        }
+        const pttDoc: PTTDoc = {
+            ...doc,
+            _rev: response.rev,
+            _id: response.id
+        }
+        const emailRes = await sendPTTEmails({
+            ...params,
+            hostUrlLink:`${params.hostUrlLink}${pttDoc._id}`,
+            doc: pttDoc,
+            emailKey: 'onMarkCompleted'
+        });
+        if (emailRes.code !== 200) {
+            return ResponseWarp.err(202, "Document saved but send email failed", 'doc', pttDoc);
+        }
+        return ResponseWarp.success('doc', pttDoc);
+    } catch (error: any) {
+        console.log(error);
+        return ResponseWarp.err(100, error.reason || '', 'errorData', error);
+    }
+};
 
