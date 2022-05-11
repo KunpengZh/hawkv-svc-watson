@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { checkQuery,adminMW } from './middleware';
 import authTest from './AuthTest';
 import sharedRouter from './SharedController';
-import rbaRouter from './RBARouter';
+import pttRouter from './PTTRouter';
 
 // User-router
 
@@ -11,5 +11,5 @@ import rbaRouter from './RBARouter';
 const baseRouter = Router();
 baseRouter.use('/shared', adminMW, sharedRouter);
 baseRouter.use('/authtest',checkQuery,authTest);
-baseRouter.use('/rba',adminMW,rbaRouter);
+baseRouter.use('/ptt',adminMW,pttRouter);
 export default baseRouter;

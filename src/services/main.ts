@@ -1,8 +1,8 @@
-export interface RBADoc {
+export interface PTTDoc {
     _id?:string;
     _rev?:string;
     requestId:string;
-    docType:'HawkRBA';
+    docType:'HawkPTT';
     status: string;
     author:string;
     requesterName: string;
@@ -45,16 +45,16 @@ export interface QueryParams {
     direction?: 'next' | 'last';
     [key: string]: any;
 }
-export interface RBAEmailParams{
+export interface PTTEmailParams{
     emailKey:string;
-    doc:RBADoc;
+    doc:PTTDoc;
     hostUrlLink:string;
     sender:string;
     receiver:string | string[];
     cc?:string | string[]
 }
 export interface SubmitParams{
-    doc:RBADoc;
+    doc:PTTDoc;
     hostUrlLink:string;
     sender:string;
     receiver:string | string[];

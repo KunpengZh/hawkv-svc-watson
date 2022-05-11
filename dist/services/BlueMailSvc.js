@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendRBAEmails = void 0;
+exports.sendPTTEmails = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ResponseWarp_1 = __importDefault(require("@shared/ResponseWarp"));
 const EmailTemplate_1 = require("./EmailTemplate");
@@ -32,7 +32,7 @@ const transporter = nodemailer_1.default.createTransport({
  * @param cerEmailParam
  * @returns
  */
-const sendRBAEmails = (emailParams) => __awaiter(void 0, void 0, void 0, function* () {
+const sendPTTEmails = (emailParams) => __awaiter(void 0, void 0, void 0, function* () {
     const { sender, receiver, cc, emailKey, doc, hostUrlLink } = emailParams;
     const emailTemplate = EmailTemplate_1.emailTemplates[emailKey];
     if (!emailTemplate) {
@@ -55,7 +55,7 @@ const sendRBAEmails = (emailParams) => __awaiter(void 0, void 0, void 0, functio
         return ResponseWarp_1.default.err(100, error);
     }
 });
-exports.sendRBAEmails = sendRBAEmails;
+exports.sendPTTEmails = sendPTTEmails;
 /**发送邮件 */
 const sentEamil = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {

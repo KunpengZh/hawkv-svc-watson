@@ -1,6 +1,6 @@
 import { CloudantV1 } from "@ibm-cloud/cloudant";
 
-const cerDBName = 'hawkv-db-rba';
+const cerDBName = 'hawkv-db-ptt';
 
 const client = CloudantV1.newInstance({ serviceName: 'CLOUDANT' });
 
@@ -36,7 +36,7 @@ export async function getDocumentById(id: string) {
     await sleep();
     try {
         const getDocParams: CloudantV1.GetDocumentParams = {
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             docId: id,
         };
         const res = await client.getDocument(getDocParams);
@@ -56,7 +56,7 @@ export async function deleteDocuments(payload: {
     await sleep();
     try {
         const res = await client.deleteDocument({
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             ...payload
         });
         return res;
@@ -78,7 +78,7 @@ export async function searchDocByIndex(payload: {
     try {
         const params: CloudantV1.PostSearchParams = {
             ...payload,
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             includeFields: payload.includeFields || [],
             limit: payload.limit || 20,
         };
@@ -96,7 +96,7 @@ export async function createNewDocument(doc: CloudantV1.Document) {
     await sleep();
     try {
         const params: CloudantV1.PostDocumentParams = {
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             document: doc
         }
         const response = await client.postDocument(params);
@@ -116,7 +116,7 @@ export async function updateDocument(doc: CloudantV1.Document) {
             throw new Error("The document do not have a _id");
         }
         const params: CloudantV1.PutDocumentParams = {
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             docId: doc._id,
             document: doc
         }
@@ -136,7 +136,7 @@ export async function bulkCreateDocuments(bulkDocs: {
     await sleep();
     try {
         const params: CloudantV1.PostBulkDocsParams = {
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             bulkDocs,
         }
         const response = await client.postBulkDocs(params);
@@ -154,7 +154,7 @@ export async function bulkUpdateDocuments(bulkDocs: {
     await sleep();
     try {
         const params: CloudantV1.PostBulkDocsParams = {
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             bulkDocs,
         }
         const response = await client.postBulkDocs(params);
@@ -174,7 +174,7 @@ export async function queryDocumentBydIds(docIds: string[]) {
             throw new Error("The given docIds over the limited 200");
         }
         const response = await client.postFind({
-            db: cerDBName || 'hawkv-db-rba',
+            db: cerDBName || 'hawkv-db-ptt',
             selector: {
                 "_id": {
                     "$in": docIds

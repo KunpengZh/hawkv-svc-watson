@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAttachment = exports.queryDocumentBydIds = exports.bulkUpdateDocuments = exports.bulkCreateDocuments = exports.updateDocument = exports.createNewDocument = exports.searchDocByIndex = exports.deleteDocuments = exports.getDocumentById = void 0;
 const cloudant_1 = require("@ibm-cloud/cloudant");
-const cerDBName = 'hawkv-db-rba';
+const cerDBName = 'hawkv-db-ptt';
 const client = cloudant_1.CloudantV1.newInstance({ serviceName: 'CLOUDANT' });
 let lastExecutionTimeStamp = 0;
 const isReady = (now) => {
@@ -46,7 +46,7 @@ function getDocumentById(id) {
         yield sleep();
         try {
             const getDocParams = {
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 docId: id,
             };
             const res = yield client.getDocument(getDocParams);
@@ -66,7 +66,7 @@ function deleteDocuments(payload) {
     return __awaiter(this, void 0, void 0, function* () {
         yield sleep();
         try {
-            const res = yield client.deleteDocument(Object.assign({ db: cerDBName || 'hawkv-db-rba' }, payload));
+            const res = yield client.deleteDocument(Object.assign({ db: cerDBName || 'hawkv-db-ptt' }, payload));
             return res;
         }
         catch (error) {
@@ -80,7 +80,7 @@ function searchDocByIndex(payload) {
     return __awaiter(this, void 0, void 0, function* () {
         yield sleep();
         try {
-            const params = Object.assign(Object.assign({}, payload), { db: cerDBName || 'hawkv-db-rba', includeFields: payload.includeFields || [], limit: payload.limit || 20 });
+            const params = Object.assign(Object.assign({}, payload), { db: cerDBName || 'hawkv-db-ptt', includeFields: payload.includeFields || [], limit: payload.limit || 20 });
             const searchRes = yield client.postSearch(params);
             if (searchRes.status === 200) {
                 return searchRes.result || {};
@@ -100,7 +100,7 @@ function createNewDocument(doc) {
         yield sleep();
         try {
             const params = {
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 document: doc
             };
             const response = yield client.postDocument(params);
@@ -125,7 +125,7 @@ function updateDocument(doc) {
                 throw new Error("The document do not have a _id");
             }
             const params = {
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 docId: doc._id,
                 document: doc
             };
@@ -147,7 +147,7 @@ function bulkCreateDocuments(bulkDocs) {
         yield sleep();
         try {
             const params = {
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 bulkDocs,
             };
             const response = yield client.postBulkDocs(params);
@@ -168,7 +168,7 @@ function bulkUpdateDocuments(bulkDocs) {
         yield sleep();
         try {
             const params = {
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 bulkDocs,
             };
             const response = yield client.postBulkDocs(params);
@@ -192,7 +192,7 @@ function queryDocumentBydIds(docIds) {
                 throw new Error("The given docIds over the limited 200");
             }
             const response = yield client.postFind({
-                db: cerDBName || 'hawkv-db-rba',
+                db: cerDBName || 'hawkv-db-ptt',
                 selector: {
                     "_id": {
                         "$in": docIds

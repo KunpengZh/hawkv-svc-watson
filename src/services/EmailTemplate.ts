@@ -1,12 +1,12 @@
-import { RBADoc } from "./main";
+import { PTTDoc } from "./main";
 
 export const emailTemplates: Record<string, {
-    subject: (doc:RBADoc) => string;
-    emailBody: (doc:RBADoc, urlLink: string) => string;
+    subject: (doc:PTTDoc) => string;
+    emailBody: (doc:PTTDoc, urlLink: string) => string;
 }> = {
     onSubmit:{
-        subject:(doc:RBADoc)=> `NDA + RBA with ${doc.supplierName}`,
-        emailBody:(doc:RBADoc, urlLink: string)=>`
+        subject:(doc:PTTDoc)=> `NDA + RBA with ${doc.supplierName}`,
+        emailBody:(doc:PTTDoc, urlLink: string)=>`
         <p>Dear ${doc.requesterName}:</p>
         </br>
         <p>Kindly initiate the RBA and NDA for ${doc.supplierName} with ${doc.IBMEntityName} only</p>

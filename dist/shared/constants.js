@@ -8,5 +8,5 @@ exports.WITHOUR_SECRET = "036e21e2641b35b5f0a7d098bab4ce770b43041fc7c7919a18112e
 exports.cloudantDDoc = 'searchIndex';
 exports.cloudantSearchIndex = "byIndex";
 exports.appSequenceDocId = "hawk-visual-sequence-doc";
-exports.appSequencePrefix = 'RBA-';
+exports.appSequencePrefix = 'PTT-';
 exports.PageQueryExcludeParms = ['limit', 'bookmark', 'current', 'direction'];

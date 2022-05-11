@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import ResponseWarp from '@shared/ResponseWarp';
-import  type {RBAEmailParams} from './main';
+import  type {PTTEmailParams} from './main';
 import { emailTemplates } from './EmailTemplate';
 
 // Create Transporter
@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
  * @param cerEmailParam 
  * @returns 
  */
-export const sendRBAEmails = async (emailParams: RBAEmailParams) => {
+export const sendPTTEmails = async (emailParams: PTTEmailParams) => {
     const {sender,receiver,cc,emailKey,doc,hostUrlLink } = emailParams;
     const emailTemplate = emailTemplates[emailKey];
     if (!emailTemplate) {

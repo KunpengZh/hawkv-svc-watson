@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const RBASvc_1 = require("../services/RBASvc");
-const rbaRouter = (0, express_1.Router)();
-rbaRouter.post('/submitRBARequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const PTTSvc_1 = require("../services/PTTSvc");
+const pttRouter = (0, express_1.Router)();
+pttRouter.post('/submitPTTRequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const parms = req.body;
-    res.json(yield (0, RBASvc_1.submitRBARequest)(parms));
+    res.json(yield (0, PTTSvc_1.submitPTTRequest)(parms));
 }));
-exports.default = rbaRouter;
+exports.default = pttRouter;

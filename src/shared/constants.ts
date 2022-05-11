@@ -7,5 +7,5 @@ export const cloudantDDoc = 'searchIndex';
 export const cloudantSearchIndex = "byIndex";
 
 export const appSequenceDocId="hawk-visual-sequence-doc";
-export const appSequencePrefix='RBA-';
+export const appSequencePrefix='PTT-';
 export const PageQueryExcludeParms=['limit', 'bookmark', 'current', 'direction'];
