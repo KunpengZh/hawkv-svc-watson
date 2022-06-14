@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/nodejs-14:latest
+FROM registry.access.redhat.com/ubi8/nodejs-16:latest
 # Create app directory
 # NodeJS 16 - registry.cirrus.ibm.com/repository/public/nodejs-16
 # NodeJS 14 - registry.cirrus.ibm.com/repository/public/nodejs-14
