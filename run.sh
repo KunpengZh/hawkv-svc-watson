@@ -6,4 +6,4 @@ pwd
 ls -li
 ls -li ./dist
 whoami
-npm start
+npm start --loglevel=verbose
