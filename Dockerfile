@@ -3,14 +3,16 @@ FROM registry.access.redhat.com/ubi8/nodejs-18:latest
 # NodeJS 16 - registry.cirrus.ibm.com/repository/public/nodejs-16
 # NodeJS 14 - registry.cirrus.ibm.com/repository/public/nodejs-14
 
+# USER root
+# RUN yum update -y
+
 USER root
-RUN yum update -y
+RUN dnf update -y && dnf upgrade -y
 
 USER 1001
 
 WORKDIR /app
 COPY package*.json ./
-RUN mkdir /app/npmlogs
 
 # Setting env for performance
 ENV NODE_ENV=production
@@ -26,7 +28,7 @@ COPY . .
 # USER 1001
 RUN npm install --only=production
 RUN npm i dotenv
-RUN npm config set cache /app/npmlogs
+# RUN npm config set cache /app/npmlogs
 
 EXPOSE 3000
 CMD ["npm", "start"]
