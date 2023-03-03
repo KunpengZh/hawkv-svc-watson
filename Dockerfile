@@ -9,8 +9,6 @@ FROM registry.access.redhat.com/ubi8/nodejs-18:latest
 USER root
 RUN dnf update -y && dnf upgrade -y
 
-USER 1001
-
 WORKDIR /app
 COPY package*.json ./
 
@@ -21,11 +19,12 @@ ENV HOME=/app
 COPY . .
 
 # RUN chmod -R a+r /app
-# RUN chown -R 1001 /app
+RUN chown -R 1001 /app
+RUN chown -R 1001 /app/.npm
 # RUN chown -R 1001 /app/tempFiles
 # RUN chmod 777 /app/.npm
 
-# USER 1001
+USER 1001
 RUN npm install --only=production
 RUN npm i dotenv
 # RUN npm config set cache /app/npmlogs
@@ -33,3 +32,4 @@ RUN npm i dotenv
 EXPOSE 3000
 CMD ["npm", "start"]
 # CMD [ "/bin/sh","/app/run.sh" ]
+
