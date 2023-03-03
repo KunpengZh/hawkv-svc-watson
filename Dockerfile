@@ -11,11 +11,8 @@ COPY package*.json ./
 
 # Setting env for performance
 ENV NODE_ENV=production
-
-# Install packages
-RUN npm ci --production
-
 ENV HOME=/app
+
 COPY . .
 
 # RUN chown -R 1001 /app
@@ -24,8 +21,8 @@ COPY . .
 # RUN chmod 777 /app/.npm
 
 # USER 1001
-# RUN npm install --only=production
-# RUN npm i dotenv
+RUN npm install --only=production
+RUN npm i dotenv
 
 EXPOSE 3000
 CMD ["npm", "start"]
