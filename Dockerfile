@@ -30,6 +30,9 @@ RUN echo "=================================="
 # RUN chmod 777 /app/.npm
 
 USER 1001
+RUN npm --version
+RUN npm install -g npm@9.6.0
+RUN npm --version
 RUN npm install --only=production
 RUN npm i dotenv
 # RUN npm config set cache /app/npmlogs
