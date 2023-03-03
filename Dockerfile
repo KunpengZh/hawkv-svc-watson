@@ -9,8 +9,6 @@ RUN yum update -y
 WORKDIR /app
 COPY package*.json ./
 
-FROM base as prod
-
 # Setting env for performance
 ENV NODE_ENV=production
 
