@@ -7,16 +7,28 @@ USER root
 RUN yum update -y
 
 WORKDIR /app
+COPY package*.json ./
+
+FROM base as prod
+
+# Setting env for performance
+ENV NODE_ENV=production
+
+# Install packages
+RUN npm ci --production
+
 ENV HOME=/app
 COPY . .
-# RUN chown -R 1001 /app
-RUN chown -R 1001:0 /app
-# RUN chown -R 1001 /app/tempFiles
-RUN chmod 777 /app/.npm
 
-USER 1001
-RUN npm install --only=production
-RUN npm i dotenv
+# RUN chown -R 1001 /app
+# RUN chown -R 1001:0 /app
+# RUN chown -R 1001 /app/tempFiles
+# RUN chmod 777 /app/.npm
+
+# USER 1001
+# RUN npm install --only=production
+# RUN npm i dotenv
 
 EXPOSE 3000
-CMD [ "/bin/sh","/app/run.sh" ]
+CMD ["npm", "start"]
+# CMD [ "/bin/sh","/app/run.sh" ]
