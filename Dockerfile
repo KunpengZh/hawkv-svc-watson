@@ -17,7 +17,7 @@ ENV HOME=/app
 
 COPY . .
 
-RUN chmod -R a+r /app
+# RUN chmod -R a+r /app
 RUN chown -R 1001 /app
 # RUN chown -R 1001 /app/tempFiles
 # RUN chmod 777 /app/.npm
