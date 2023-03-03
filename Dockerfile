@@ -4,7 +4,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-18:latest
 # NodeJS 14 - registry.cirrus.ibm.com/repository/public/nodejs-14
 
 # USER root
-RUN yum update -y
+# RUN yum update -y
 
 WORKDIR /app
 ENV HOME=/app
