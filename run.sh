@@ -6,4 +6,5 @@ pwd
 ls -li
 ls -li ./dist
 whoami
+chown -R 1004610000:0 "/app/.npm"
 npm start --loglevel=verbose
