@@ -4,13 +4,14 @@ FROM registry.access.redhat.com/ubi8/nodejs-18:latest
 # NodeJS 14 - registry.cirrus.ibm.com/repository/public/nodejs-14
 USER root
 RUN yum update -y
+USER 1001
 WORKDIR /app
 ENV HOME=/app
 COPY . .
 RUN chown -R 1001 /app
 # RUN chown -R 1001 /app/tempFiles
 # RUN chmod 777 /app/tempFiles
-USER 1001
+
 RUN npm install --only=production
 RUN npm i dotenv
 
