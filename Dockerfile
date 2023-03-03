@@ -18,9 +18,14 @@ ENV HOME=/app
 
 COPY . .
 
+RUN pwd
+RUN whoami
+RUN ls -l
 # RUN chmod -R a+r /app
 RUN chown -R 1001 /app
-RUN chown -R 1001 /app/.npm
+
+RUN echo "=================================="
+
 # RUN chown -R 1001 /app/tempFiles
 # RUN chmod 777 /app/.npm
 
@@ -28,6 +33,12 @@ USER 1001
 RUN npm install --only=production
 RUN npm i dotenv
 # RUN npm config set cache /app/npmlogs
+
+RUN pwd
+RUN whoami
+RUN ls -l
+
+RUN chown -R 1001 /app/.npm
 
 EXPOSE 3000
 CMD ["npm", "start"]
