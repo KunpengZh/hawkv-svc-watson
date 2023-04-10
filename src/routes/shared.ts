@@ -1,16 +1,21 @@
 import { Request, Response, Router } from 'express';
-import { queryByDocId, searchDocumentsPage, saveOrUpdateDoc, searchAllDocuments, bulkCreateDocs } from '../services/SharedSvc';
-import { userProfile } from '@shared/constants';
+import { queryByDocId, searchDocumentsPage, generateAppSequence, saveOrUpdateDoc, searchAllDocuments, bulkCreateDocs } from '../services/SharedSvc';
+import { byIndex } from '@shared/constants';
 
 const sharedRouter = Router();
 
+sharedRouter.get('/generateAppSequence', async (req: Request, res: Response) => {
+    const dateStr: string = req.query.dateStr as string;
+    res.json(await generateAppSequence(dateStr));
+});
+
 sharedRouter.post('/searchAllDocuments', async (req: Request, res: Response) => {
     const queryObj: Record<string, string> = req.body;
-    res.json(await searchAllDocuments(queryObj,userProfile));
+    res.json(await searchAllDocuments(queryObj,byIndex));
 });
 sharedRouter.post('/searchDocumentsPage', async (req: Request, res: Response) => {
     const queryObj: Record<string, string> = req.body;
-    res.json(await searchDocumentsPage(queryObj,userProfile));
+    res.json(await searchDocumentsPage(queryObj,byIndex));
 });
 
 sharedRouter.post('/saveOrUpdateDoc', async (req: Request, res: Response) => {

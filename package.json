@@ -1,5 +1,5 @@
 {
-  "name": "hawkv-svc-ptt",
+  "name": "hawkv-svc-coder",
   "version": "0.0.0",
   "scripts": {
     "build": "./node_modules/.bin/ts-node build.ts",
@@ -44,7 +44,7 @@
       "max-len": [
         "error",
         {
-          "code": 100
+          "code": 200
         }
       ],
       "no-console": 1,
@@ -74,7 +74,7 @@
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
-    "nodemailer": "^6.7.5"
+    "nodemailer": "^6.9.1"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.2.0",
@@ -86,8 +86,8 @@
     "@types/jsonfile": "^6.1.0",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^17.0.31",
-    "@types/nodemailer": "^6.4.4",
+    "@types/node": "^18.14.0",
+    "@types/nodemailer": "^6.4.7",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",

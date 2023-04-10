@@ -1,33 +1,39 @@
 import { CloudantV1 } from "@ibm-cloud/cloudant";
 
-const hawkvDBName = 'hawkv-db-ptt';
+const hawkvDBName = 'hawkv-db-form';
 
 const client = CloudantV1.newInstance({ serviceName: 'CLOUDANT' });
 
-let lastExecutionTimeStamp: number = 0;
-const isReady = (now: number) => {
-    if ((now - lastExecutionTimeStamp) > 250) {
-        lastExecutionTimeStamp = now;
-        return true;
-    }
-    return false;
-}
+let lastExecutionTimeStamp = 0;
+
+const isReady = (now: number): boolean => {
+  const elapsedMs = now - lastExecutionTimeStamp;
+  const minDelayMs = 250;
+
+  if (elapsedMs > minDelayMs) {
+    lastExecutionTimeStamp = now;
+    return true;
+  }
+
+  return false;
+};
 
 const sleep = async (): Promise<void> => {
-    return new Promise<void>(resolve => {
-        function wait() {
-            let now = Date.parse(new Date().toString());
-            if (isReady(now)) {
-                resolve();
-            } else {
-                setTimeout(() => {
-                    wait();
-                }, 250);
-            }
-        }
-        wait();
-    });
-}
+  return new Promise<void>((resolve) => {
+    const wait = () => {
+      const now = Date.now();
+
+      if (isReady(now)) {
+        resolve();
+      } else {
+        setTimeout(wait, 250 - (now - lastExecutionTimeStamp));
+      }
+    };
+
+    wait();
+  });
+};
+
 
 export default function Cloudant() {
     return client;

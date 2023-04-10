@@ -1,15 +1,14 @@
 import { Router } from 'express';
-import { checkQuery, adminMW } from './middleware';
-import sharedRouter from './SharedController';
-import pttRouter from './PTTRouter';
+import { adminMW } from './middleware';
+import shared from './shared';
+import userGroup from './userGroup';
 import userProfile from './userProfile';
-
-// User-router
-
+import formBuilder from './formBuilder'
 
 // Export the base-router
 const baseRouter = Router();
-baseRouter.use('/shared', adminMW, sharedRouter);
-baseRouter.use('/ptt', adminMW, pttRouter);
+baseRouter.use('/shared', adminMW, shared);
+baseRouter.use('/userGroup', adminMW, userGroup);
 baseRouter.use('/userProfile', adminMW, userProfile);
+baseRouter.use('/formBuilder',adminMW,formBuilder);
 export default baseRouter;

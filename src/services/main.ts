@@ -1,39 +1,3 @@
-export interface PTTDoc {
-    _id?:string;
-    _rev?:string;
-    requestId:string;
-    docType:'HawkPTT';
-    status: string;
-    author:string;
-    requesterName: string;
-    organizationName: string;
-    requesterEmail: string;
-    division: string;
-    supplierAribaID: string;
-    supplierName: string;
-    supplierAddress: string;
-    supplierWeb: string;
-    supplierPoC: string;
-    supplierPoCPhone: string;
-    supplierPoCEmail: string;
-    supplierProdDesc: string;
-    purchasingPurpose: string;
-    additionalLanguage: string[];
-    PAECI: string;
-    RBALetterAgreement: boolean;
-    isSupplierParentEntity: string[];
-    isSupplierOnlyServices: string[];
-    isUSFederalSupplier: string[];
-    isPIFSupplier: string[];
-    SECLA: boolean;
-    isSECLAParentEntity: string[];
-    EPLA: boolean;
-    isEPLALoned: string[];
-    EPLAPO: string;
-    IEPLA: boolean;
-    IBMEntityName: string;
-    IBMEntityAddress: string;
-}
 export interface AppSequence {
     key: string;
     sequence: string[];
@@ -45,18 +9,71 @@ export interface QueryParams {
     direction?: 'next' | 'last';
     [key: string]: any;
 }
-export interface PTTEmailParams{
-    emailKey:string;
-    doc:PTTDoc;
-    hostUrlLink:string;
-    sender:string;
-    receiver:string | string[];
-    cc?:string | string[]
+export interface IFormConfig {
+    _id:string;
+    _rev:string;
+    docType:string;
+    author:string;
+    createDate:string;
+    editors?:string;
+    userGroup?:string[];
+    formKey:string | number;
+    formName?:string;
+    formSize: 'small' | 'large' | 'middle';
+    formLayout: 'horizontal' | 'vertical' | 'inline';
+    labelCol?: object;
+    wrapperCol?: object;
+    formSchema: IComponentItem[];
+    formStatus: IFormStatus[];
+    curStatus: string;
+    itemsPerRow: number;
+    type: string;
+    [key:string]:any
 }
-export interface SubmitParams{
-    doc:PTTDoc;
-    hostUrlLink:string;
-    sender:string;
-    receiver:string | string[];
-    cc?:string | string[]
+interface IComponentItem {
+    type: string;
+    orderNumber:number | string;
+    name: string;
+    label?: string;
+    width?: number;
+    labelCol?: object;
+    wrapperCol?: object;
+    rules?: any[];
+    help?: string;
+    hintKey?: string;
+    editable?: string[];
+    children?: IComponentItem[];
+    required?: boolean
+    visiable?: string[];
+    dataSource?: { label: string; value: any }[];
+    disabled?: boolean;
+
+    btnType?: any;
+    btnSize?: any;
+    btnEvent?: {
+        eventList: string[];
+        toFormStatus?: string;
+        notification?: INotification
+    };
+    [key:string]:any
 }
+interface INotification {
+    to: string | string[];
+    cc?: string | string[];
+    subject: string;
+    body: string;
+}
+interface IFormStatus { title: string; description: string }
+
+export interface IUserGroupDoc {
+    _id?: string;
+    _rev?: string;
+    docType: 'userGroup';
+    userGroups: IUserGroup[]
+}
+export interface IUserGroup {
+    key: number | string;
+    userGroup: string;
+    userList: string;
+}
+

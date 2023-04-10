@@ -4,8 +4,16 @@ export const HAWK_TOKEN='hawk-token';
 export const WITHOUR_SECRET="036e21e2641b35b5f0a7d098bab4ce770b43041fc7c7919a18112e8ae5092c19";
 
 export const cloudantDDoc = 'searchIndex';
-export const cloudantSearchIndex = "byIndex";
+export const byIndex = "byIndex";
+export const userProfile = "byUserProfile";
+export const userGroup = "byUserGroup";
 
 export const appSequenceDocId="hawk-visual-sequence-doc";
-export const appSequencePrefix='PTT-';
+export const USER_GROUP_DOC_ID="hawk-visual-usergroup-doc";
 export const PageQueryExcludeParms=['limit', 'bookmark', 'current', 'direction'];
+
+export const docTypes={
+    'FormBuilder':'FormBuilder',
+    'userGroup':'userGroup'
+}
+
