@@ -1,5 +1,5 @@
 import ResponseWarp, { ResponseWarpType } from '@shared/ResponseWarp'
-import { cloudantDDoc } from '@shared/constants';
+import { HAWK_PREFIX, cloudantDDoc } from '@shared/constants';
 import { searchDocByIndex, updateDocument, createNewDocument, getDocumentById, bulkCreateDocuments } from '../cloudant';
 import { appSequenceDocId } from '@shared/constants';
 import type { AppSequence, QueryParams } from './main';
@@ -18,7 +18,7 @@ export async function generateAppSequence(dateStr: string): Promise<ResponseWarp
 
     try {
         // Generate the app sequence prefix based on the date string
-        const appSequencePrefix = `${dateStr}-`;
+        const appSequencePrefix = `${HAWK_PREFIX}${dateStr}-`;
 
         // Get the document that stores the app sequence
         const sequenceDoc = await getDocumentById(appSequenceDocId);

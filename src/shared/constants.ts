@@ -5,15 +5,18 @@ export const WITHOUR_SECRET="036e21e2641b35b5f0a7d098bab4ce770b43041fc7c7919a181
 
 export const cloudantDDoc = 'searchIndex';
 export const byIndex = "byIndex";
+export const byFormBuilder="byFormBuilder";
 export const userProfile = "byUserProfile";
 export const userGroup = "byUserGroup";
 
 export const appSequenceDocId="hawk-visual-sequence-doc";
 export const USER_GROUP_DOC_ID="hawk-visual-usergroup-doc";
 export const PageQueryExcludeParms=['limit', 'bookmark', 'current', 'direction'];
+export const HAWK_PREFIX="HAWKV-";
 
 export const docTypes={
     'FormBuilder':'FormBuilder',
-    'userGroup':'userGroup'
+    'userGroup':'userGroup',
+    'FormDocument':'FormDocument'
 }
 

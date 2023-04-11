@@ -10,15 +10,15 @@ export interface QueryParams {
     [key: string]: any;
 }
 export interface IFormConfig {
-    _id:string;
-    _rev:string;
-    docType:string;
-    author:string;
-    createDate:string;
-    editors?:string;
-    userGroup?:string[];
-    formKey:string | number;
-    formName?:string;
+    _id: string;
+    _rev: string;
+    docType: 'FormBuilder';
+    author: string;
+    createDate: string;
+    editors?: string;
+    userGroup?: string[];
+    formKey: string | number;
+    formName?: string;
     formSize: 'small' | 'large' | 'middle';
     formLayout: 'horizontal' | 'vertical' | 'inline';
     labelCol?: object;
@@ -28,11 +28,11 @@ export interface IFormConfig {
     curStatus: string;
     itemsPerRow: number;
     type: string;
-    [key:string]:any
+    [key: string]: any
 }
 interface IComponentItem {
     type: string;
-    orderNumber:number | string;
+    orderNumber: number | string;
     name: string;
     label?: string;
     width?: number;
@@ -55,7 +55,7 @@ interface IComponentItem {
         toFormStatus?: string;
         notification?: INotification
     };
-    [key:string]:any
+    [key: string]: any
 }
 interface INotification {
     to: string | string[];
@@ -75,5 +75,30 @@ export interface IUserGroup {
     key: number | string;
     userGroup: string;
     userList: string;
+}
+
+export interface IFormDocument {
+    _id?: string;
+    _rev?: string;
+    docType: 'FormDocument',
+
+    author?: string;
+    formKey: string;
+    formName: string;
+    formId: string;
+    createDate: string;
+
+    formDocId: string;
+    formDocStatus: string;
+
+    auditTrail?:
+    {
+        userId?: string;
+        date?: string;
+        action?: string;
+    }[];
+    hostUrlLink?: string;
+
+    [key: string]: any
 }
 

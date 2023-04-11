@@ -2,7 +2,7 @@ import { IClientData } from "@shared/JwtService";
 import ResponseWarp from "@shared/ResponseWarp";
 import CacheServices from "@shared/CacheServices";
 import { queryByDocId, searchAllDocuments } from "./SharedSvc";
-import { USER_GROUP_DOC_ID, byIndex, docTypes } from "@shared/constants";
+import { USER_GROUP_DOC_ID, byFormBuilder, docTypes } from "@shared/constants";
 import { IFormConfig, IUserGroupDoc } from "./main";
 
 /**
@@ -27,7 +27,7 @@ export async function loadFormTemplateList(userData: IClientData) {
     }
 
     // 获取所有的 Forms Template
-    const response = await searchAllDocuments({ docType: docTypes.FormBuilder }, byIndex);
+    const response = await searchAllDocuments({ docType: docTypes.FormBuilder }, byFormBuilder);
     if (response.code !== 200) {
         return ResponseWarp.err(404, 'Form Templates not find')
     }
