@@ -57,7 +57,7 @@ interface IComponentItem {
     };
     [key: string]: any
 }
-interface INotification {
+export interface INotification {
     to: string | string[];
     cc?: string | string[];
     subject: string;
