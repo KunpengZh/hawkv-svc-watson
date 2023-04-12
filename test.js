@@ -1,4 +1,5 @@
-const obj={a:1,b:2,c:3,d:4,x:{aa:1,bb:2}}
-const {a,b,...querObj}=obj;
+let aa=['a','b','c','d','e','f'];
 
-console.log(querObj)
+aa=aa.slice(0,aa.indexOf('c')+1);
+
+console.log(aa)

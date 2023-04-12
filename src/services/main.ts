@@ -8,6 +8,7 @@ export interface QueryParams {
     current?: number;
     direction?: 'next' | 'last';
     [key: string]: any;
+    bookmarks?:string[];
 }
 export interface IFormConfig {
     _id: string;

@@ -122,7 +122,7 @@ export const searchAllDocuments = async (queryObj: Record<string, string>, index
 };
 
 export async function searchDocumentsPage(queryParams: QueryParams, index: string): Promise<ResponseWarpType> {
-    const { limit = 200, bookmark, current = 0, direction = 'next', ...queryObj } = queryParams;
+    const { limit = 200, bookmark, current = 0, direction = 'next', bookmarks = [], ...queryObj } = queryParams;
     try {
         const queryStr = Object.entries(queryObj)
             .filter(([key, value]) => Array.isArray(value) ? value.length === 2 : Boolean(value))
@@ -138,13 +138,31 @@ export async function searchDocumentsPage(queryParams: QueryParams, index: strin
             includeDocs: true,
         });
 
+        /**
+         * 管理历史的 booksmarks
+         * 如果是新出现的bookmark,应该是新的一页,我们只需要将其顺序加入到bookmarks数组中
+         * 如果是已经存在的bookmark,说明是向前翻页,我们只需要保留从0开始到这个bookmark的数组
+         */
+        const newBookMark = result.bookmark;
+        let newBookmarks = bookmarks;
+        if (newBookMark) {
+            if (newBookmarks.includes(newBookMark)) {
+                newBookmarks = newBookmarks.slice(0, newBookmarks.indexOf(newBookMark) + 1);
+            } else {
+                newBookmarks.push(newBookMark);
+            }
+        } else {
+            newBookmarks = [];
+        }
+
+
         return ResponseWarp.successX({
             total: result.total_rows,
-            bookmark: result.bookmark,
+            bookmark: newBookMark,
             records: result.rows?.map(row => row.doc),
-            previousBookmark: bookmark?.toString(),
+            bookmarks: newBookmarks,
             limit: Number(limit),
-            current: direction === 'next' ? current + 1 : current - 1,
+            current: direction === 'next' ? current + 1 : Math.max(current - 1, 1),
             direction,
         });
     } catch (error: any) {
