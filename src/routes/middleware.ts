@@ -31,13 +31,13 @@ export const adminMW = async (req: Request, res: Response, next: NextFunction) =
 
 export const checkQuery = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {accessToken}=req.query;
+        const {sessionId}=req.query;
         // Get json-web-token
-        if (!accessToken) {
+        if (!sessionId) {
             throw Error('JWT not present in signed cookie.');
         }
         // Make sure user role is an admin
-        const clientData = await decodeJwt(accessToken.toString());
+        const clientData = await decodeJwt(sessionId.toString());
         next();
     } catch (err:any) {
         return res.status(UNAUTHORIZED).json({

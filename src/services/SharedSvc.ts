@@ -129,6 +129,7 @@ export async function searchDocumentsPage(queryParams: QueryParams, index: strin
             .map(([key, value]) => Array.isArray(value) ? `${key}:${value}` : `${key}:"${value}"`)
             .join(" AND ") ?? "";
 
+        console.info(queryStr);
         const result = await searchDocByIndex({
             ddoc: 'searchIndex',
             index,

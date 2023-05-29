@@ -43,13 +43,13 @@ const adminMW = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.adminMW = adminMW;
 const checkQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { accessToken } = req.query;
+        const { sessionId } = req.query;
         // Get json-web-token
-        if (!accessToken) {
+        if (!sessionId) {
             throw Error('JWT not present in signed cookie.');
         }
         // Make sure user role is an admin
-        const clientData = yield (0, JwtService_1.decodeJwt)(accessToken.toString());
+        const clientData = yield (0, JwtService_1.decodeJwt)(sessionId.toString());
         next();
     }
     catch (err) {

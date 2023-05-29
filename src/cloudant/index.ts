@@ -1,6 +1,6 @@
 import { CloudantV1 } from "@ibm-cloud/cloudant";
 
-const hawkvDBName = 'hawkv-db-form';
+const hawkvDBName = 'hawkv-db-workflow';
 
 const client = CloudantV1.newInstance({ serviceName: 'CLOUDANT' });
 

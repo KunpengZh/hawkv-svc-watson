@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendPTTEmails = void 0;
+exports.sendNotificationEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ResponseWarp_1 = __importDefault(require("@shared/ResponseWarp"));
-const EmailTemplate_1 = require("./EmailTemplate");
 // Create Transporter
 const transporter = nodemailer_1.default.createTransport({
     host: "na.relay.ibm.com",
@@ -32,17 +31,13 @@ const transporter = nodemailer_1.default.createTransport({
  * @param cerEmailParam
  * @returns
  */
-const sendPTTEmails = (emailParams) => __awaiter(void 0, void 0, void 0, function* () {
-    const { sender, receiver, cc, emailKey, doc, hostUrlLink } = emailParams;
-    const emailTemplate = EmailTemplate_1.emailTemplates[emailKey];
-    if (!emailTemplate) {
-        return ResponseWarp_1.default.err(100, 'emailTemplateName: ' + emailKey + ' does not exist');
-    }
+const sendNotificationEmail = (emailParams) => __awaiter(void 0, void 0, void 0, function* () {
+    const { sender, to, cc, subject, body } = emailParams;
     const email = {
         from: sender,
-        html: emailTemplate.emailBody(doc, hostUrlLink),
-        to: receiver,
-        subject: emailTemplate.subject(doc),
+        html: body,
+        to: to,
+        subject: subject,
     };
     if (cc) {
         email.cc = cc;
@@ -55,7 +50,7 @@ const sendPTTEmails = (emailParams) => __awaiter(void 0, void 0, void 0, functio
         return ResponseWarp_1.default.err(100, error);
     }
 });
-exports.sendPTTEmails = sendPTTEmails;
+exports.sendNotificationEmail = sendNotificationEmail;
 /**发送邮件 */
 const sentEamil = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {

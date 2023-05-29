@@ -11,29 +11,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAttachment = exports.queryDocumentBydIds = exports.bulkUpdateDocuments = exports.bulkCreateDocuments = exports.updateDocument = exports.createNewDocument = exports.searchDocByIndex = exports.deleteDocuments = exports.getDocumentById = void 0;
 const cloudant_1 = require("@ibm-cloud/cloudant");
-const hawkvDBName = 'hawkv-db-ptt';
+const hawkvDBName = 'hawkv-db-workflow';
 const client = cloudant_1.CloudantV1.newInstance({ serviceName: 'CLOUDANT' });
 let lastExecutionTimeStamp = 0;
 const isReady = (now) => {
-    if ((now - lastExecutionTimeStamp) > 250) {
+    const elapsedMs = now - lastExecutionTimeStamp;
+    const minDelayMs = 250;
+    if (elapsedMs > minDelayMs) {
         lastExecutionTimeStamp = now;
         return true;
     }
     return false;
 };
 const sleep = () => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise(resolve => {
-        function wait() {
-            let now = Date.parse(new Date().toString());
+    return new Promise((resolve) => {
+        const wait = () => {
+            const now = Date.now();
             if (isReady(now)) {
                 resolve();
             }
             else {
-                setTimeout(() => {
-                    wait();
-                }, 250);
+                setTimeout(wait, 250 - (now - lastExecutionTimeStamp));
             }
-        }
+        };
         wait();
     });
 });

@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import { adminMW } from './middleware';
+import { adminMW, checkQuery } from './middleware';
 import shared from './shared';
 import userGroup from './userGroup';
 import userProfile from './userProfile';
-import formBuilder from './formBuilder'
-import formList from './formList';
+import fileUploader from './fileUploadRouter';
+import fileDownloader from './fileDownloadRouter';
 
 // Export the base-router
 const baseRouter = Router();
 baseRouter.use('/shared', adminMW, shared);
 baseRouter.use('/userGroup', adminMW, userGroup);
 baseRouter.use('/userProfile', adminMW, userProfile);
-baseRouter.use('/formBuilder',adminMW,formBuilder);
-baseRouter.use('/formList',adminMW,formList);
+baseRouter.use('/files', adminMW, fileUploader);
+baseRouter.use('/download', checkQuery, fileDownloader);
 export default baseRouter;

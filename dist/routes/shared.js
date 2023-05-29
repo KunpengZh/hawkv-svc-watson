@@ -11,25 +11,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const SharedSvc_1 = require("../services/SharedSvc");
+const constants_1 = require("@shared/constants");
 const sharedRouter = (0, express_1.Router)();
-sharedRouter.get('/generalAppSequence', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+sharedRouter.get('/generateAppSequence', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const dateStr = req.query.dateStr;
-    res.json(yield (0, SharedSvc_1.generalAppSequence)(dateStr));
+    res.json(yield (0, SharedSvc_1.generateAppSequence)(dateStr));
 }));
-sharedRouter.post('/searchDocuments', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+sharedRouter.post('/searchAllDocuments', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const queryObj = req.body;
-    res.json(yield (0, SharedSvc_1.searchDocuments)(queryObj));
+    res.json(yield (0, SharedSvc_1.searchAllDocuments)(queryObj, constants_1.byIndex));
 }));
 sharedRouter.post('/searchDocumentsPage', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const queryObj = req.body;
-    res.json(yield (0, SharedSvc_1.searchDocumentsPage)(queryObj));
+    res.json(yield (0, SharedSvc_1.searchDocumentsPage)(queryObj, constants_1.byIndex));
 }));
-sharedRouter.post('/saveDoc', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+sharedRouter.post('/saveOrUpdateDoc', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const doc = req.body;
-    res.json(yield (0, SharedSvc_1.saveDoc)(doc));
+    res.json(yield (0, SharedSvc_1.saveOrUpdateDoc)(doc));
 }));
 sharedRouter.get('/queryByDocId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const docId = req.query.docId;
     res.json(yield (0, SharedSvc_1.queryByDocId)(docId));
+}));
+sharedRouter.get('/bulkCreateDocs', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const docs = req.body;
+    res.json(yield (0, SharedSvc_1.bulkCreateDocs)(docs));
 }));
 exports.default = sharedRouter;

@@ -1,11 +1,11 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-
+import fileUpload from 'express-fileupload';
 import express, { NextFunction, Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
 import 'express-async-errors';
-
+import path from 'path';
 import BaseRouter from './routes';
 import { CustomError } from '@shared/errors';
 
@@ -19,9 +19,15 @@ const app = express();
  **********************************************************************************/
 
 // Common middlewares
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb', parameterLimit: 1000000 }));
 app.use(cookieParser());
+app.use(fileUpload({
+    limits: { fileSize: 500 * 1024 * 1024 },
+    useTempFiles : true,
+    tempFileDir : path.join(__dirname,'..','tempFiles/'),
+    debug:true,
+}));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
