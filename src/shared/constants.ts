@@ -19,3 +19,9 @@ export const docTypes={
     'FormDocument':'FormDocument'
 }
 
+export const formStatusObj = {
+    'Draft': 'Draft',
+    'Pending Approval':'Pending Approval',
+    'Completed': 'Completed'
+}
+

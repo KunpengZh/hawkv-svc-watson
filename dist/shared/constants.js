@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.docTypes = exports.HAWK_PREFIX = exports.PageQueryExcludeParms = exports.USER_GROUP_DOC_ID = exports.appSequenceDocId = exports.userGroup = exports.userProfile = exports.byIndex = exports.cloudantDDoc = exports.WITHOUR_SECRET = exports.HAWK_TOKEN = exports.COOKIE_EXP = exports.JWT_SECRET = void 0;
+exports.formStatusObj = exports.docTypes = exports.HAWK_PREFIX = exports.PageQueryExcludeParms = exports.USER_GROUP_DOC_ID = exports.appSequenceDocId = exports.userGroup = exports.userProfile = exports.byIndex = exports.cloudantDDoc = exports.WITHOUR_SECRET = exports.HAWK_TOKEN = exports.COOKIE_EXP = exports.JWT_SECRET = void 0;
 exports.JWT_SECRET = process.env.JWT_SECRET;
 exports.COOKIE_EXP = process.env.COOKIE_EXP || 86400000;
 exports.HAWK_TOKEN = 'hawk-token';
@@ -17,4 +17,9 @@ exports.docTypes = {
     'userProfile': 'userProfile',
     'userGroup': 'userGroup',
     'FormDocument': 'FormDocument'
+};
+exports.formStatusObj = {
+    'Draft': 'Draft',
+    'Pending Approval': 'Pending Approval',
+    'Completed': 'Completed'
 };
