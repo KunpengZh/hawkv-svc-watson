@@ -41,7 +41,10 @@ RUN pwd
 RUN whoami
 RUN ls -l
 
+RUN chown -R 1001 /app
 RUN chown -R 1001 /app/.npm
+RUN chown -R 1001 /app/tempFiles
+RUN chmod 777 /app/tempFiles
 
 EXPOSE 3000
 CMD ["npm", "start"]
