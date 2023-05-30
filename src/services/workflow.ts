@@ -1,7 +1,7 @@
 import ResponseWarp from "@shared/ResponseWarp";
-import {submitRequestEmail,completeRequestEmail} from './BlueMailSvc';
+import { submitRequestEmail, completeRequestEmail } from './BlueMailSvc';
 import type { IFormDocument } from "./main";
-import {saveOrUpdateDoc} from './SharedSvc';
+import { saveOrUpdateDoc } from './SharedSvc';
 import { formStatusObj } from "@shared/constants";
 import dayjs from "dayjs";
 
@@ -47,6 +47,25 @@ export const completeDoc = async (doc: IFormDocument) => {
             comments: 'Approved the document'
         })
         return await saveOrUpdateDoc(newDoc);
+    } catch (error: any) {
+        console.log(error);
+        return ResponseWarp.err(100, error.reason || '', 'errorData', error);
+    }
+};
+
+export const rejectDoc = async (doc: IFormDocument) => {
+    try {
+        const emailRes = await completeRequestEmail(doc);
+        if (emailRes.code !== 200) {
+            return emailRes;
+        }
+        doc.formStatus = formStatusObj.Draft;
+        doc.auditTrail.push({
+            who: doc.fllEmail,
+            date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            comments: 'Returned the document'
+        })
+        return await saveOrUpdateDoc(doc);
     } catch (error: any) {
         console.log(error);
         return ResponseWarp.err(100, error.reason || '', 'errorData', error);

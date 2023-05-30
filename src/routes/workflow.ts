@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { submitDoc,completeDoc } from '../services/workflow';
+import { submitDoc,completeDoc,rejectDoc } from '../services/workflow';
 import type { IFormDocument } from '@services/main';
 
 const sharedRouter = Router();
@@ -11,5 +11,9 @@ sharedRouter.post('/submitDoc', async function (req: Request, res: Response) {
 sharedRouter.post('/completeDoc', async function (req: Request, res: Response) {
     const formDoc: IFormDocument = req.body;
     res.json(await completeDoc(formDoc));
+});
+sharedRouter.post('/rejectDoc', async function (req: Request, res: Response) {
+    const formDoc: IFormDocument = req.body;
+    res.json(await rejectDoc(formDoc));
 });
 export default sharedRouter;

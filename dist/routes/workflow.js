@@ -24,4 +24,10 @@ sharedRouter.post('/completeDoc', function (req, res) {
         res.json(yield (0, workflow_1.completeDoc)(formDoc));
     });
 });
+sharedRouter.post('/rejectDoc', function (req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const formDoc = req.body;
+        res.json(yield (0, workflow_1.rejectDoc)(formDoc));
+    });
+});
 exports.default = sharedRouter;
