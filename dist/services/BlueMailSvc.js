@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.completeRequestEmail = exports.submitRequestEmail = exports.sendNotificationEmail = void 0;
+exports.rejectRequestEmail = exports.completeRequestEmail = exports.submitRequestEmail = exports.sendNotificationEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ResponseWarp_1 = __importDefault(require("@shared/ResponseWarp"));
 const dayjs_1 = __importDefault(require("dayjs"));
@@ -128,11 +128,11 @@ const basicEmailInfo = (formDoc) => `
     </div>
 `;
 const submitRequestEmail = (formDoc) => __awaiter(void 0, void 0, void 0, function* () {
-    const { fllEmail, fllName, requesterName, requester } = formDoc;
-    if (!fllEmail || !requester) {
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
         return ResponseWarp_1.default.err(500, "Workflow requester or FLL approver is invalid");
     }
-    let to = fllEmail;
+    let to = approverEmail;
     const email = {
         from: requester,
         to,
@@ -161,15 +161,15 @@ const submitRequestEmail = (formDoc) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.submitRequestEmail = submitRequestEmail;
 const completeRequestEmail = (formDoc) => __awaiter(void 0, void 0, void 0, function* () {
-    const { fllEmail, fllName, requesterName, requester } = formDoc;
-    if (!fllEmail || !requester) {
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
         return ResponseWarp_1.default.err(500, "Workflow requester or FLL approver is invalid");
     }
-    let to = fllEmail;
+    let to = requester;
     const email = {
-        from: requester,
+        from: approverEmail,
         to,
-        cc: requester,
+        cc: approverEmail,
         html: `
             <p>Dear ${requesterName || requester},</p>
             <br/>
@@ -193,3 +193,36 @@ const completeRequestEmail = (formDoc) => __awaiter(void 0, void 0, void 0, func
     return ResponseWarp_1.default.success();
 });
 exports.completeRequestEmail = completeRequestEmail;
+const rejectRequestEmail = (formDoc) => __awaiter(void 0, void 0, void 0, function* () {
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
+        return ResponseWarp_1.default.err(500, "Workflow requester or FLL approver is invalid");
+    }
+    let to = requester;
+    const email = {
+        from: approverEmail,
+        to,
+        cc: approverEmail,
+        html: `
+            <p>Dear ${requesterName || requester},</p>
+            <br/>
+            <p>This is an automatic reminder sent by Hawk Visual -  Work Flow.</p>
+            <p>Below the Request been Returned:</p>
+            <br/>
+            ${basicEmailInfo(formDoc)}
+            <br/>
+            <br/>
+            <p>Submit Date: ${(0, dayjs_1.default)().format('YYYY-MM-DD HH:mm:ss')}</p>
+            <br/>
+            `,
+        subject: `Hawk Visual ${formDoc.docFormId} Returned`
+    };
+    const sendEmailRes = yield sentEamil(email);
+    if (sendEmailRes.code !== 200) {
+        // 发关邮件失败
+        console.log('发关邮件失败');
+        return ResponseWarp_1.default.err(100, sendEmailRes.data);
+    }
+    return ResponseWarp_1.default.success();
+});
+exports.rejectRequestEmail = rejectRequestEmail;

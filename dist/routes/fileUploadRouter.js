@@ -23,7 +23,7 @@ const fileUploader = (0, express_1.Router)();
 fileUploader.post('/uploadFileToBox', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const reqBody = req.body || {};
-        const { boxFolderName } = reqBody;
+        const { boxFolderName, lastFileKey } = reqBody;
         let { boxFolderId } = reqBody;
         if (boxFolderId === 'undefined') {
             boxFolderId = undefined;
@@ -73,6 +73,8 @@ fileUploader.post('/uploadFileToBox', function (req, res) {
                             folderID: boxFolderId,
                             fileName: uploadFileObj.name
                         });
+                        // 将上一个文件的版本附带回前端
+                        createRes.lastFileKey = lastFileKey;
                         fs.unlink(targetFileName, (err) => {
                             if (err) {
                                 res.json(ResponseWarp_1.default.successX(createRes, JSON.stringify(err)));

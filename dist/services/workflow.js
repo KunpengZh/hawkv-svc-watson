@@ -70,7 +70,7 @@ const completeDoc = (doc) => __awaiter(void 0, void 0, void 0, function* () {
 exports.completeDoc = completeDoc;
 const rejectDoc = (doc) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const emailRes = yield (0, BlueMailSvc_1.completeRequestEmail)(doc);
+        const emailRes = yield (0, BlueMailSvc_1.rejectRequestEmail)(doc);
         if (emailRes.code !== 200) {
             return emailRes;
         }
