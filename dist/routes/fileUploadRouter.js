@@ -23,7 +23,8 @@ const fileUploader = (0, express_1.Router)();
 fileUploader.post('/uploadFileToBox', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const reqBody = req.body || {};
-        const { boxFolderName, lastFileKey } = reqBody;
+        const { boxFolderName, lastFileKey, lastFileVersion = 'R0' } = reqBody;
+        const fileVersion = `R${Number(lastFileVersion.slice(1)) + 1}`;
         let { boxFolderId } = reqBody;
         if (boxFolderId === 'undefined') {
             boxFolderId = undefined;
@@ -65,16 +66,17 @@ fileUploader.post('/uploadFileToBox', function (req, res) {
             }
             for (let key of Object.keys(req.files)) {
                 const uploadFileObj = req.files[key];
-                const targetFileName = `${path_1.default.join(__dirname, '../..', 'tempFiles')}/${uploadFileObj.name}`;
+                const targetFileName = `${path_1.default.join(__dirname, '../..', 'tempFiles')}/${fileVersion}-${uploadFileObj.name}`;
                 uploadFileObj.mv(targetFileName);
                 setTimeout(() => __awaiter(this, void 0, void 0, function* () {
                     try {
                         const createRes = yield (0, box_1.uploadFile)({
                             folderID: boxFolderId,
-                            fileName: uploadFileObj.name
+                            fileName: `${fileVersion}-${uploadFileObj.name}`
                         });
                         // 将上一个文件的版本附带回前端
                         createRes.lastFileKey = lastFileKey;
+                        createRes.curFileVersion = fileVersion;
                         fs.unlink(targetFileName, (err) => {
                             if (err) {
                                 res.json(ResponseWarp_1.default.successX(createRes, JSON.stringify(err)));
