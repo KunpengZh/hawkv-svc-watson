@@ -33,8 +33,8 @@ export interface IFormDocument {
     requester: string;
     requesterName: string;
 
-    fllEmail: string;
-    fllName: string;
+    approverName:string;
+    approverEmail:string;
 
     formStatus: string;
     readers?: string;

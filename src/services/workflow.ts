@@ -1,5 +1,5 @@
 import ResponseWarp from "@shared/ResponseWarp";
-import { submitRequestEmail, completeRequestEmail } from './BlueMailSvc';
+import { submitRequestEmail, completeRequestEmail,rejectRequestEmail } from './BlueMailSvc';
 import type { IFormDocument } from "./main";
 import { saveOrUpdateDoc } from './SharedSvc';
 import { formStatusObj } from "@shared/constants";
@@ -55,7 +55,7 @@ export const completeDoc = async (doc: IFormDocument) => {
 
 export const rejectDoc = async (doc: IFormDocument) => {
     try {
-        const emailRes = await completeRequestEmail(doc);
+        const emailRes = await rejectRequestEmail(doc);
         if (emailRes.code !== 200) {
             return emailRes;
         }

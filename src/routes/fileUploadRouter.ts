@@ -17,7 +17,7 @@ const fileUploader = Router();
 /** 上传一个文件到box */
 fileUploader.post('/uploadFileToBox', async function (req: Request, res: Response) {
     const reqBody: any = req.body || {};
-    const { boxFolderName } = reqBody;
+    const { boxFolderName, lastFileKey } = reqBody;
     let { boxFolderId } = reqBody;
     if (boxFolderId === 'undefined') {
         boxFolderId = undefined;
@@ -66,10 +66,12 @@ fileUploader.post('/uploadFileToBox', async function (req: Request, res: Respons
             uploadFileObj.mv(targetFileName);
             setTimeout(async () => {
                 try {
-                    const createRes = await uploadFile({
+                    const createRes:any = await uploadFile({
                         folderID: boxFolderId,
                         fileName: uploadFileObj.name
                     });
+                    // 将上一个文件的版本附带回前端
+                    createRes.lastFileKey = lastFileKey;
                     fs.unlink(targetFileName, (err: any) => {
                         if (err) {
                             res.json(ResponseWarp.successX(createRes, JSON.stringify(err)));

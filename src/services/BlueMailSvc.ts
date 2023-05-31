@@ -124,11 +124,11 @@ const basicEmailInfo = (formDoc: IFormDocument) => `
 
 
 export const submitRequestEmail = async (formDoc: IFormDocument) => {
-    const { fllEmail, fllName, requesterName, requester } = formDoc;
-    if (!fllEmail || !requester) {
+    const { approverEmail, approverName,  requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
         return ResponseWarp.err(500, "Workflow requester or FLL approver is invalid");
     }
-    let to: string | string[] = fllEmail;
+    let to: string | string[] = approverEmail;
     const email = {
         from: requester,
         to,
@@ -157,15 +157,15 @@ export const submitRequestEmail = async (formDoc: IFormDocument) => {
 }
 
 export const completeRequestEmail = async (formDoc: IFormDocument) => {
-    const { fllEmail, fllName, requesterName, requester } = formDoc;
-    if (!fllEmail || !requester) {
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
         return ResponseWarp.err(500, "Workflow requester or FLL approver is invalid");
     }
-    let to: string | string[] = fllEmail;
+    let to: string | string[] = requester;
     const email = {
-        from: requester,
+        from: approverEmail,
         to,
-        cc: requester,
+        cc: approverEmail,
         html: `
             <p>Dear ${requesterName || requester},</p>
             <br/>
@@ -179,6 +179,39 @@ export const completeRequestEmail = async (formDoc: IFormDocument) => {
             <br/>
             `,
         subject: `Hawk Visual ${formDoc.docFormId} Completed`
+    }
+    const sendEmailRes = await sentEamil(email);
+    if (sendEmailRes.code !== 200) {
+        // 发关邮件失败
+        console.log('发关邮件失败')
+        return ResponseWarp.err(100, sendEmailRes.data);
+    }
+    return ResponseWarp.success()
+}
+
+export const rejectRequestEmail = async (formDoc: IFormDocument) => {
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
+    if (!approverEmail || !requester) {
+        return ResponseWarp.err(500, "Workflow requester or FLL approver is invalid");
+    }
+    let to: string | string[] = requester;
+    const email = {
+        from: approverEmail,
+        to,
+        cc: approverEmail,
+        html: `
+            <p>Dear ${requesterName || requester},</p>
+            <br/>
+            <p>This is an automatic reminder sent by Hawk Visual -  Work Flow.</p>
+            <p>Below the Request been Returned:</p>
+            <br/>
+            ${basicEmailInfo(formDoc)}
+            <br/>
+            <br/>
+            <p>Submit Date: ${dayjs().format('YYYY-MM-DD HH:mm:ss')}</p>
+            <br/>
+            `,
+        subject: `Hawk Visual ${formDoc.docFormId} Returned`
     }
     const sendEmailRes = await sentEamil(email);
     if (sendEmailRes.code !== 200) {
