@@ -59,6 +59,10 @@ const sentEamil = async (email: any) => {
     }
 }
 
+const getDocumentTitle = (docCategory: string) => {
+    return `Wofkflow Document - ${docCategory}`
+}
+
 const basicEmailInfo = (formDoc: IFormDocument) => `
     <div style="
     max-width:1000px; 
@@ -78,7 +82,7 @@ const basicEmailInfo = (formDoc: IFormDocument) => `
             font-weight: 700;
             color: rgb(0,0,0,0.65);
             border-bottom: 1px solid rgb(0,0,0,0.35);">
-            Hawk Visual Work Flow
+            ${getDocumentTitle(formDoc.docCategory)}
         </p>
     </div>
     <div style="
@@ -98,7 +102,7 @@ const basicEmailInfo = (formDoc: IFormDocument) => `
             </tr>
             <tr>
                 <td style="text-align: right;padding: 8px;">Buyer Name:</td>
-                <td style="text-align: left;padding: 8px;">${formDoc.buyerName}</td>
+                <td style="text-align: left;padding: 8px;">${formDoc.requesterName}</td>
                 <td style="text-align: right;padding: 8px;">Buyer's DPA:</td>
                 <td style="text-align: left;padding: 8px;">${formDoc.buyerDPA}</td>
             </tr>
@@ -124,7 +128,7 @@ const basicEmailInfo = (formDoc: IFormDocument) => `
 
 
 export const submitRequestEmail = async (formDoc: IFormDocument) => {
-    const { approverEmail, approverName,  requesterName, requester } = formDoc;
+    const { approverEmail, approverName, requesterName, requester } = formDoc;
     if (!approverEmail || !requester) {
         return ResponseWarp.err(500, "Workflow requester or FLL approver is invalid");
     }

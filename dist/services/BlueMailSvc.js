@@ -65,6 +65,9 @@ const sentEamil = (email) => __awaiter(void 0, void 0, void 0, function* () {
         return ResponseWarp_1.default.err(100, "Error send email ", "errorData", email);
     }
 });
+const getDocumentTitle = (docCategory) => {
+    return `Wofkflow Document - ${docCategory}`;
+};
 const basicEmailInfo = (formDoc) => `
     <div style="
     max-width:1000px; 
@@ -84,7 +87,7 @@ const basicEmailInfo = (formDoc) => `
             font-weight: 700;
             color: rgb(0,0,0,0.65);
             border-bottom: 1px solid rgb(0,0,0,0.35);">
-            Hawk Visual Work Flow
+            ${getDocumentTitle(formDoc.docCategory)}
         </p>
     </div>
     <div style="
@@ -104,7 +107,7 @@ const basicEmailInfo = (formDoc) => `
             </tr>
             <tr>
                 <td style="text-align: right;padding: 8px;">Buyer Name:</td>
-                <td style="text-align: left;padding: 8px;">${formDoc.buyerName}</td>
+                <td style="text-align: left;padding: 8px;">${formDoc.requesterName}</td>
                 <td style="text-align: right;padding: 8px;">Buyer's DPA:</td>
                 <td style="text-align: left;padding: 8px;">${formDoc.buyerDPA}</td>
             </tr>
